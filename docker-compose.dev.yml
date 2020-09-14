@@ -22,21 +22,11 @@ services:
     volumes:
       - redis_data:/var/lib/redis
 
-  celery_worker_1:
+  celery_worker:
     build:
       context: ./services/scheduler
       dockerfile: Dockerfile.dev
-    command: celery worker -A celery_worker.celery --loglevel=info --hostname=worker_1@%h
-    volumes:
-      - ./services/scheduler/:/usr/src/app/
-    depends_on:
-      - redis
-
-  celery_worker_2:
-    build:
-      context: ./services/scheduler
-      dockerfile: Dockerfile.dev
-    command: celery worker -A celery_worker.celery --loglevel=info --hostname=worker_2@%h
+    command: celery worker -A celery_worker.celery --loglevel=info
     volumes:
       - ./services/scheduler/:/usr/src/app/
     depends_on:
