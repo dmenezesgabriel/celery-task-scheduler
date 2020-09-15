@@ -1,0 +1,18 @@
+FROM openjdk:8-alpine
+ENV SONAR_SCANNER_VERSION 4.2.0.1873
+RUN apk add --no-cache wget && \
+    wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip && \
+    unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION} && \
+    cd /usr/bin && ln -s /sonar-scanner-${SONAR_SCANNER_VERSION}/bin/sonar-scanner sonar-scanner && \
+    apk del wget
+COPY . /usr/src/
+CMD sonar-scanner -X \
+                  -Dsonar.host.url=$SONAR_HOST_URL \
+                  -Dsonar.projectKey=$SONAR_PROJECT_KEY \
+                  -Dsonar.projectName=$SONAR_PROJECT_NAME \
+                  -Dsonar.projectVersion=$SONAR_PROJECT_VERSION \
+                  -Dsonar.sources=$SONAR_PROJECT_SOURCE \
+                  -Dsonar.projectBaseDir=$SONAR_PROJECT_BASE_DIR \
+                  -Dsonar.scm.provider=$SONAR_SCM_PROVIDER \
+                  -Dsonar.language=$SONAR_PROJECT_LANGUAGE \
+                  -Dsonar.sourceEncoding=$SONAR_SOURCE_ENCODING
