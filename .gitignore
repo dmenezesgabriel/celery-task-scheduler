@@ -2,3 +2,5 @@ celerybeat-schedule
 celerybeat.pid
 # Python
 .pytest_cache/*
+# Logs
+logs/
