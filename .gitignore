@@ -4,3 +4,4 @@ celerybeat.pid
 .pytest_cache/*
 # Logs
 logs/
+.env
