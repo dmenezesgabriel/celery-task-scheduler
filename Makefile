@@ -8,16 +8,6 @@ run-dev:
 down-dev:
 	docker-compose -f docker-compose.dev.yml down
 
-# Raspberry Pi
-build-pi:
-	docker-compose -f docker-compose.pi.yml build --no-cache
-
-run-pi:
-	docker-compose -f docker-compose.pi.yml up --scale celery_worker=3
-
-down-pi:
-	docker-compose -f docker-compose.pi.yml down
-
 # Sonarqube
 build-sq:
 	docker-compose -f docker-compose.sonarqube.yml build --no-cache sonarqube
