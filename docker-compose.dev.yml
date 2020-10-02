@@ -11,7 +11,7 @@ services:
     ports:
       - 5000:5000
     env_file:
-      - ./.env.dev
+      - ./.env
     depends_on:
       - redis
     links:
@@ -26,7 +26,9 @@ services:
     build:
       context: ./services/scheduler
       dockerfile: Dockerfile.dev
-    command: celery worker -A celery_worker.celery --loglevel=info
+    env_file:
+      - ./.env
+    command: celery -A celery_worker.celery worker --loglevel=INFO
     volumes:
       - ./services/scheduler/:/usr/src/app/
     depends_on:
@@ -36,7 +38,9 @@ services:
     build:
       context: ./services/scheduler
       dockerfile: Dockerfile.dev
-    command: celery beat -A celery_worker.celery --loglevel=info
+    env_file:
+      - ./.env
+    command: celery -A celery_worker.celery beat --loglevel=INFO
     volumes:
       - ./services/scheduler/:/usr/src/app/
     depends_on:
