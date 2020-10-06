@@ -2,7 +2,7 @@ import os
 
 from celery.schedules import crontab
 from src.extensions import celery
-from src.utils import telegram as telegram_utils
+from src.helpers import telegram as telegram_helpers
 
 __all__ = ["high_temperature_alert"]
 
@@ -39,7 +39,7 @@ def get_cpu_temp():
 @celery.task()
 def high_temperature_alert():
     temperature = get_cpu_temp()
-    if temperature > 10:
-        telegram_utils.send_message(f"Current CPU Temperature {temperature}")
+    if temperature > 50:
+        telegram_helpers.send_message(f"Current CPU Temperature {temperature}")
     print(temperature)
     return temperature
