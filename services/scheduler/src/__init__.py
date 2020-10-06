@@ -49,7 +49,7 @@ def create_app(config_class=Config):
             if not os.path.exists("logs"):
                 os.mkdir("logs")
             file_handler = RotatingFileHandler(
-                "logs/flask-notes.log", maxBytes=10240, backupCount=10
+                "logs/log.log", maxBytes=10240, backupCount=10
             )
             file_handler.setFormatter(
                 logging.Formatter(
