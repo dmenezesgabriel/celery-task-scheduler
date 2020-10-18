@@ -7,7 +7,7 @@ services:
     command: python manage.py run -h 0.0.0.0
     volumes:
       - ./services/scheduler/:/usr/src/app/
-    restart: always
+    restart: unless-stopped
     ports:
       - 5000:5000
     env_file:
