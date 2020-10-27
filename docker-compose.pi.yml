@@ -1,0 +1,64 @@
+version: "3.3"
+services:
+  scheduler:
+    build:
+      context: ./services/scheduler
+      dockerfile: Dockerfile.pi
+    command: python manage.py run -h 0.0.0.0
+    volumes:
+      - ./services/scheduler/:/usr/src/app/
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    env_file:
+      - ./.env
+    depends_on:
+      - redis
+    links:
+      - redis:redis
+
+  redis:
+    image: redis:6.0.5-alpine
+    volumes:
+      - redis_data:/var/lib/redis
+    restart: unless-stopped
+
+  celery_worker:
+    build:
+      context: ./services/scheduler
+      dockerfile: Dockerfile.pi
+    env_file:
+      - ./.env
+    command: celery -A celery_worker.celery worker --loglevel=INFO
+    volumes:
+      - ./services/scheduler/:/usr/src/app/
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  celery-beat:
+    build:
+      context: ./services/scheduler
+      dockerfile: Dockerfile.pi
+    env_file:
+      - ./.env
+    command: celery -A celery_worker.celery beat --loglevel=INFO
+    volumes:
+      - ./services/scheduler/:/usr/src/app/
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  flower:
+    build:
+      context: ./services/flower
+      dockerfile: Dockerfile.pi
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - FLOWER_PORT=9999
+    ports:
+      - 9999:9999
+    restart: unless-stopped
+
+volumes:
+  redis_data:
