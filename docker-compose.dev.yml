@@ -7,7 +7,6 @@ services:
     command: python manage.py run -h 0.0.0.0
     volumes:
       - ./services/scheduler/:/usr/src/app/
-    restart: unless-stopped
     ports:
       - 5000:5000
     env_file:
@@ -47,7 +46,9 @@ services:
       - redis
 
   flower:
-    image: mher/flower
+    build:
+      context: ./services/flower
+      dockerfile: Dockerfile.dev
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - FLOWER_PORT=9999

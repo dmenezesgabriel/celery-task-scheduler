@@ -3,7 +3,7 @@ build-dev:
 	time docker-compose -f docker-compose.dev.yml build
 
 run-dev:
-	docker-compose -f docker-compose.dev.yml up -d --scale celery_worker=3
+	docker-compose -f docker-compose.dev.yml up --scale celery_worker=3
 
 down-dev:
 	docker-compose -f docker-compose.dev.yml down
