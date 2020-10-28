@@ -1,5 +1,7 @@
 # Pull official base image
-FROM arm32v7/python:3.7-slim-buster
+# For Raspbian OS use arm32v7/python
+# Ubuntu server image
+FROM arm64v8/python:3.7-slim-buster
 # Set work directory
 WORKDIR /usr/src/app
 # Set envrionment variables
