@@ -5,3 +5,4 @@ celerybeat.pid
 # Logs
 logs/
 .env
+geckodriver.log
