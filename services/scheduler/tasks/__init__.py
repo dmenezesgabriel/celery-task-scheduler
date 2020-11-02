@@ -1,10 +1,18 @@
-import glob
+import importlib.util
+import os
 from os.path import basename, dirname, isfile, join
 
-# Import all modules from tasks folder
-modules = glob.glob(join(dirname(__file__), "*.py"))
-__all__ = [
-    basename(f)[:-3]
-    for f in modules
-    if isfile(f) and not f.endswith("__init__.py")
-]
+for root, dirs, files in os.walk(dirname(__file__)):
+    for file_name in files:
+        module_path = join(root, file_name)
+        if (
+            isfile(module_path)
+            and not module_path.endswith("__init__.py")
+            and module_path.endswith(".py")
+        ):
+            base_name = basename(module_path)[:-3]
+            module_spec = importlib.util.spec_from_file_location(
+                base_name, module_path
+            )
+            module = importlib.util.module_from_spec(module_spec)
+            module_spec.loader.exec_module(module)
