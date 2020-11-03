@@ -13,7 +13,7 @@ build-pi:
 	time docker-compose -f docker-compose.pi.yml build
 
 run-pi:
-	docker-compose -f docker-compose.pi.yml up --scale celery_worker=3
+	docker-compose -f docker-compose.pi.yml up -d --scale celery_worker=3
 
 down-pi:
 	docker-compose -f docker-compose.pi.yml down

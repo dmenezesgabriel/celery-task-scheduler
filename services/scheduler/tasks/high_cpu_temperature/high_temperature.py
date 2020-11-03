@@ -38,6 +38,6 @@ def get_cpu_temp():
 @celery.task()
 def high_temperature_alert():
     temperature = get_cpu_temp()
-    if temperature > 50:
+    if temperature > 55:
         telegram_helpers.send_message(f"Current CPU Temperature {temperature}")
     return temperature
