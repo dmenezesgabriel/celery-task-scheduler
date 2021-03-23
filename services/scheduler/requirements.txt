@@ -3,4 +3,5 @@ celery==5.0.0
 redis==3.5.3
 flower==0.9.5
 python-telegram-bot==13.0
-selenium
+selenium==3.141.0
+slack_sdk==3.4.2

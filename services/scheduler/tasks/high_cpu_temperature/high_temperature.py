@@ -1,7 +1,6 @@
-import os
-
+from config import Config
 from src.extensions import celery
-from src.helpers import telegram as telegram_helpers
+from src.helpers import slack as slack_helper
 
 
 @celery.on_after_finalize.connect
@@ -38,6 +37,8 @@ def get_cpu_temp():
 @celery.task()
 def high_temperature_alert():
     temperature = get_cpu_temp()
-    if temperature > 55:
-        telegram_helpers.send_message(f"Current CPU Temperature {temperature}")
+    if temperature > 1:
+        slack_helper.send_message(
+            f"{Config.MACHINE_NAME}: Current CPU Temperature {temperature}"
+        )
     return temperature

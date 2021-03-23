@@ -1,7 +1,10 @@
 import os
+import platform
 
 
 class Config(object):
+    MACHINE_NAME = os.getenv("MACHINE_NAME")
+
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     # Application
     SECRET_KEY = os.environ.get("SECRET_KEY") or "you-will-never-guess"
@@ -27,8 +30,11 @@ class Config(object):
     REDIS_PASSWORD = ""
     REDIS_PORT = 6379
     REDIS_URL = "redis://redis:6379/0"
+    # Messages
     TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
     TELEGRAM_DEFAULT_CHAT_ID = os.getenv("TELEGRAM_DEFAULT_CHAT_ID")
+    SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
+    SLACK_DEFAULT_CHANNEL = os.getenv("SLACK_DEFAULT_CHANNEL")
 
 
 class DevelopmentConfig(Config):

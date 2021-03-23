@@ -1,8 +1,9 @@
 import re
 import subprocess
 
+from config import Config
 from src.extensions import celery
-from src.helpers import telegram as telegram_helpers
+from src.helpers import slack as slack_helper
 
 
 @celery.on_after_finalize.connect
@@ -23,5 +24,7 @@ def get_available_space():
 def low_disc_space_alert():
     disk_space = get_available_space()
     if disk_space < 4096:
-        telegram_helpers.send_message(f"Current disk space {disk_space}")
+        slack_helper.send_message(
+            f"{Config.MACHINE_NAME}: Current disk space {disk_space}"
+        )
     return disk_space
