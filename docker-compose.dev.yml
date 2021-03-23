@@ -15,11 +15,21 @@ services:
       - redis
     links:
       - redis:redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
 
   redis:
     image: redis:6.0.5-alpine
     volumes:
       - redis_data:/var/lib/redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
 
   celery_worker:
     build:
@@ -32,6 +42,11 @@ services:
       - ./services/scheduler/:/usr/src/app/
     depends_on:
       - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
 
   celery-beat:
     build:
@@ -44,6 +59,11 @@ services:
       - ./services/scheduler/:/usr/src/app/
     depends_on:
       - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
 
   flower:
     build:
@@ -54,6 +74,11 @@ services:
       - FLOWER_PORT=9999
     ports:
       - 9999:9999
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
 
 volumes:
   redis_data:
