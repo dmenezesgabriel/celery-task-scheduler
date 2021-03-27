@@ -3,7 +3,7 @@ services:
   scheduler:
     build:
       context: ./services/scheduler
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     command: python manage.py run -h 0.0.0.0
     volumes:
       - ./services/scheduler/:/usr/src/app/
@@ -34,7 +34,7 @@ services:
   celery_worker:
     build:
       context: ./services/scheduler
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     env_file:
       - ./.env
     command: celery -A celery_worker.celery worker --loglevel=INFO
@@ -51,7 +51,7 @@ services:
   celery-beat:
     build:
       context: ./services/scheduler
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     env_file:
       - ./.env
     command: celery -A celery_worker.celery beat --loglevel=INFO
@@ -68,7 +68,7 @@ services:
   flower:
     build:
       context: ./services/flower
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - FLOWER_PORT=9999
