@@ -6,4 +6,5 @@ celerybeat.pid
 logs/
 .env
 geckodriver.log
-modules/
+tasks/
+!tasks/__init__.py
