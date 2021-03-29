@@ -6,3 +6,4 @@ celerybeat.pid
 logs/
 .env
 geckodriver.log
+modules/
